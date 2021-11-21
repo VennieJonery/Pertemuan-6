@@ -1,71 +1,28 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
-import './App.css';
-import {BrowserRouter as Router,
-  Route,
-  Switch,
-  Link,
-  Redirect,
-  withRouter
-} from 'react-router-dom'
-
-
-//router dengan array
 
 class App extends Component{
   constructor(){
     super()
-    this.state = {
-      isAuh : false
-    }
+    this.myRef = React.createRef();
+  }
+  componentDidMount(){
+    this.myRef.current.style.height = '100vh';
+    this.myRef.current.style.width ='100%'
+  }
+  setBackground(bgColor, txtColor){
+    this.myRef.current.style.background = bgColor;
+    this.myRef.current.style.color = txtColor;
   }
   render(){
-    const LoginButton = withRouter(({history}) => (
-      <button onClick={() => {
-        this.setState({isAuth : true})
-        history.push('/profile')
-      }}>Login</button>
-    ))
-
-    const LogoutButton = withRouter(({history}) => (
-      <button onClick={() => {
-        this.setState({isAuth : false})
-        history.push('/login')
-      }}>Logout</button>
-    ))
-
-    const routes = [{
-      path : '/',
-      exact : true,
-      render : ()=> <div>Ini Halaman Home</div>
-    },{
-      path : '/news',
-      render : ()=> <div>Ini Halaman News</div>
-    },{
-      path : '/login',
-      render : ()=> <LoginButton />
-    },{
-      path : '/profile',
-      render : ()=> this.state.isAuth ? <div>Ini halaman Profile <br /><LogoutButton /></div> : <Redirect to ='/login' />
-    }]
-    return(
-      <Router>
-        <div>
-        <ul style={{listStyle: 'none'}}>
-             <li><Link to='/'>Home</Link></li>
-             <li><Link to='/news'>News</Link></li>
-             <li><Link to='/profile'>Profile</Link></li>
-           </ul>
-           <Switch>
-           {
-             routes.map((item, index) => (
-               <Route path={item.path} exact={item.exact} render={item.render} />
-             ))
-           }
-           </Switch>
-        </div>
-      </Router>
-    )
+    return (
+      <div ref={this.myRef}>
+        <p>Belajar pengembangan aplikasi web dengan Reactjs dengan topik Router dan Refs</p>
+        <button onClick={this.setBackground.bind(this, 'white', 'black')}>White</button>
+        <button onClick={this.setBackground.bind(this, 'red', 'white')}>Red</button>
+        <button onClick={this.setBackground.bind(this, 'green', 'white')}>Green</button>
+        <button onClick={this.setBackground.bind(this, 'blue', 'white')}>Blue</button>
+      </div>
+    );
   }
 }
 
